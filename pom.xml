@@ -238,6 +238,15 @@
         <dependency>
             <groupId>ca.uhn.hapi</groupId>
             <artifactId>hapi-structures-v23</artifactId>
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.16.0</version>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
             <version>1.0.1</version>
         </dependency>
         <dependency>
@@ -862,7 +871,7 @@
             <artifactId>olis-service</artifactId>
             <version>20111111</version>
         </dependency>
-
+    
         <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk18on-->
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -1226,6 +1235,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+  
 
         <!-- This is a dependency for the Caisi Integrator Objects. Only required until
         OpenJPA is no longer needed in Integrator. -->
@@ -1690,3 +1700,4 @@
         </profile>
     </profiles>
 </project>
+

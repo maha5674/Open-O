@@ -25,9 +25,23 @@ function ts_makeSortable(table) {
     for (var i = 0; i < firstRow.cells.length; i++) {
         var cell = firstRow.cells[i];
         var txt = ts_getInnerText(cell);
-        cell.innerHTML = '<a href="#" class="sortheader" ' +
-            'onclick="ts_resortTable(this, ' + i + ');return false;">' +
-            txt + '<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a>';
+        var link = document.createElement('a');
+link.href = "#";
+link.classList.add('sortheader');
+link.textContent = txt;  // Use textContent to avoid XSS
+
+var span = document.createElement('span');
+span.classList.add('sortarrow');
+link.appendChild(span);
+
+// Event listener for the link
+link.addEventListener('click', function(event) {
+    event.preventDefault();
+    ts_resortTable(this, i);
+});
+
+// Append the link to the cell
+cell.appendChild(link);
     }
 }
 
@@ -115,7 +129,7 @@ function ts_resortTable(lnk, clid) {
         }
     }
 
-    span.innerHTML = ARROW;
+    span.textContent = ARROW;  // Use textContent instead of innerHTML to avoid XSS risks
 }
 
 function getParent(el, pTagName) {

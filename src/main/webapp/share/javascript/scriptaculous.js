@@ -25,9 +25,14 @@
 
 var Scriptaculous = {
     Version: '1.7.1_beta3',
-    require: function (libraryName) {
-        // inserting via DOM fails in Safari 2.0, so brute force approach
-        document.write('<script type="text/javascript" src="' + libraryName + '"></script>');
+    require: function(libraryName) {
+        // Creating the script element
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = libraryName;
+        
+        // Appending the script to the document head
+        document.head.appendChild(script);
     },
     REQUIRED_PROTOTYPE: '1.5.1',
     load: function () {
@@ -39,18 +44,18 @@ var Scriptaculous = {
         if ((typeof Prototype == 'undefined') ||
             (typeof Element == 'undefined') ||
             (typeof Element.Methods == 'undefined') ||
-            (convertVersionString(Prototype.Version) <
+            (convertVersionString(Prototype.Version) < 
                 convertVersionString(Scriptaculous.REQUIRED_PROTOTYPE)))
             throw ("script.aculo.us requires the Prototype JavaScript framework >= " +
                 Scriptaculous.REQUIRED_PROTOTYPE);
 
-        $A(document.getElementsByTagName("script")).findAll(function (s) {
+        $A(document.getElementsByTagName("script")).findAll(function(s) {
             return (s.src && s.src.match(/scriptaculous\.js(\?.*)?$/))
-        }).each(function (s) {
+        }).each(function(s) {
             var path = s.src.replace(/scriptaculous\.js(\?.*)?$/, '');
             var includes = s.src.match(/\?.*load=([a-z,]*)/);
             (includes ? includes[1] : 'builder,effects,dragdrop,controls,slider,sound').split(',').each(
-                function (include) {
+                function(include) {
                     Scriptaculous.require(path + include + '.js')
                 });
         });
@@ -58,3 +63,4 @@ var Scriptaculous = {
 }
 
 Scriptaculous.load();
+
